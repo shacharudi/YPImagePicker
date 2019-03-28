@@ -63,7 +63,7 @@ public class YPImagePicker: UINavigationController {
         navigationBar.isTranslucent = false
 
         picker.didSelectItems = { [weak self] items in
-            let showsFilters = YPConfig.showsFilters
+            let showsFilters = false
             
             // Use Fade transition instead of default push animation
             let transition = CATransition()
