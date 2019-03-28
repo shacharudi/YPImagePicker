@@ -216,7 +216,6 @@
 				99C6D69D1F1FB5C100711DB2 /* Source */,
 				99C6D6971F1FB5C100711DB2 /* Resources */,
 				52412A941CA6114A0073C4BE /* Products */,
-				EB3251DE20878D5900A6190D /* Frameworks */,
 			);
 			indentWidth = 4;
 			sourceTree = "<group>";
@@ -367,13 +366,6 @@
 				99CF6D2A201CB96700487F77 /* YPVideoCaptureHelper.swift */,
 			);
 			path = Video;
-			sourceTree = "<group>";
-		};
-		EB3251DE20878D5900A6190D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		EB473E2C208E1ED800D16105 /* Extensions */ = {
