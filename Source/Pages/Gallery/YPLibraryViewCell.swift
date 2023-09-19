@@ -13,7 +13,7 @@ class YPMultipleSelectionIndicator: UIView {
     
     let circle = UIView()
     let label = UILabel()
-    var selectionColor = YPConfig.colors.selectedCircleBackground
+    var selectionColor = UIColor.ypSystemBlue
 
     convenience init() {
         self.init(frame: .zero)
