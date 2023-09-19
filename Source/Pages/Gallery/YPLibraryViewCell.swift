@@ -13,7 +13,7 @@ class YPMultipleSelectionIndicator: UIView {
     
     let circle = UIView()
     let label = UILabel()
-    var selectionColor = UIColor.ypSystemBlue
+    var selectionColor = YPConfig.colors.selectedCircleBackground
 
     convenience init() {
         self.init(frame: .zero)
@@ -31,7 +31,7 @@ class YPMultipleSelectionIndicator: UIView {
         
         circle.layer.cornerRadius = size / 2.0
         label.textAlignment = .center
-        label.textColor = .white
+        label.textColor = YPConfig.colors.selectedCircleTextColor
         label.font = YPConfig.fonts.multipleSelectionIndicatorFont
         
         set(number: nil)
