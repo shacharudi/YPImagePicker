@@ -3,7 +3,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "YPImagePicker",
+    name: "SUYPImagePicker",
     defaultLocalization: "en",
     platforms: [
         .iOS(.v12)
