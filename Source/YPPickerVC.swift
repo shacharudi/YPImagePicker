@@ -276,7 +276,7 @@ open class YPPickerVC: YPBottomPager, YPBottomPagerDelegate {
                                                                style: .plain,
                                                                target: self,
                                                                action: #selector(close))
-            navigationItem.leftBarButtonItem?.tintColor = YPConfig.colors.tintColor
+            navigationItem.leftBarButtonItem?.tintColor = YPConfig.colors.cancelButtonColor
         }
         switch mode {
         case .library:
