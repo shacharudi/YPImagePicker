@@ -374,6 +374,11 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
                 .firstIndex(where: { $0.index == self.currentlySelectedIndex }) else {
                 return nil
             }
+            
+            guard self.selectedItems.indices.contains(selectedAssetIndex) else {
+                return nil
+            }
+            
             return self.selectedItems[selectedAssetIndex]
         }
         return nil
