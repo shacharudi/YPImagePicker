@@ -33,8 +33,8 @@ final class YPAssetViewContainer: UIView {
     public let curtain = UIView()
     public let spinnerView = UIView()
     public let squareCropButton = UIButton()
-    public let multipleSelectionButton: AlwaysHiddenButton = {
-        let v = AlwaysHiddenButton()
+    public let multipleSelectionButton: UIButton = {
+        let v = UIButton()
         v.setImage(YPConfig.icons.multipleSelectionOffIcon, for: .normal)
         return v
     }()
