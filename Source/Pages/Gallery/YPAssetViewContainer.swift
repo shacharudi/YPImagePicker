@@ -9,6 +9,21 @@
 import Foundation
 import UIKit
 import Stevia
+
+class AlwaysHiddenButton: UIButton {
+    override var isHidden: Bool {
+        didSet {
+            alwaysHide()
+        }
+    }
+    
+    func alwaysHide() {
+        self.isHidden = true
+        self.alpha = 0.0
+        self.isEnabled = false
+    }
+}
+
 import AVFoundation
 
 /// The container for asset (video or image). It containts the YPGridView and YPAssetZoomableView.
@@ -18,8 +33,8 @@ final class YPAssetViewContainer: UIView {
     public let curtain = UIView()
     public let spinnerView = UIView()
     public let squareCropButton = UIButton()
-    public let multipleSelectionButton: UIButton = {
-        let v = UIButton()
+    public let multipleSelectionButton: AlwaysHiddenButton = {
+        let v = AlwaysHiddenButton()
         v.setImage(YPConfig.icons.multipleSelectionOffIcon, for: .normal)
         return v
     }()
@@ -88,6 +103,7 @@ final class YPAssetViewContainer: UIView {
         }
 
         // Multiple selection button
+        multipleSelectionButton.alwaysHide()
         subviews(multipleSelectionButton)
         multipleSelectionButton.size(42).trailing(15)
         multipleSelectionButton.Bottom == self.Bottom - 15
