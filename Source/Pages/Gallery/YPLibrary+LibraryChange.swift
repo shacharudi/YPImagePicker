@@ -23,30 +23,34 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
 
         DispatchQueue.main.async {
             let collectionView = self.v.collectionView
-            self.mediaManager.fetchResult = collectionChanges.fetchResultAfterChanges
-            if !collectionChanges.hasIncrementalChanges || collectionChanges.hasMoves {
-                collectionView.reloadData()
-            } else {
-                collectionView.performBatchUpdates({
-                    if let removedIndexes = collectionChanges.removedIndexes,
-                       removedIndexes.count != 0 {
-                        collectionView.deleteItems(at: removedIndexes.aapl_indexPathsFromIndexesWithSection(0))
-                    }
-
-                    if let insertedIndexes = collectionChanges.insertedIndexes, insertedIndexes.count != 0 {
-                        collectionView.insertItems(at: insertedIndexes.aapl_indexPathsFromIndexesWithSection(0))
-                    }
-                }, completion: { finished in
-                    guard finished,
-                          let changedIndexes = collectionChanges.changedIndexes,
-                          changedIndexes.count != 0 else {
-                        ypLog("Some problems there.")
-                        return
-                    }
-
-                    collectionView.reloadItems(at: changedIndexes.aapl_indexPathsFromIndexesWithSection(0))
-                })
-            }
+            collectionView.reloadData()
+            
+            // prevent calling performBatchUpdates to prevent crash
+            
+//            self.mediaManager.fetchResult = collectionChanges.fetchResultAfterChanges
+//            if !collectionChanges.hasIncrementalChanges || collectionChanges.hasMoves {
+//                collectionView.reloadData()
+//            } else {
+//                collectionView.performBatchUpdates({
+//                    if let removedIndexes = collectionChanges.removedIndexes,
+//                       removedIndexes.count != 0 {
+//                        collectionView.deleteItems(at: removedIndexes.aapl_indexPathsFromIndexesWithSection(0))
+//                    }
+//
+//                    if let insertedIndexes = collectionChanges.insertedIndexes, insertedIndexes.count != 0 {
+//                        collectionView.insertItems(at: insertedIndexes.aapl_indexPathsFromIndexesWithSection(0))
+//                    }
+//                }, completion: { finished in
+//                    guard finished,
+//                          let changedIndexes = collectionChanges.changedIndexes,
+//                          changedIndexes.count != 0 else {
+//                        ypLog("Some problems there.")
+//                        return
+//                    }
+//
+//                    collectionView.reloadItems(at: changedIndexes.aapl_indexPathsFromIndexesWithSection(0))
+//                })
+//            }
 
             self.updateAssetSelection()
             self.mediaManager.resetCachedAssets()
