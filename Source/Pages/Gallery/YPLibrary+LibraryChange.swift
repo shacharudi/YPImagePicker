@@ -15,11 +15,11 @@ extension YPLibraryVC: PHPhotoLibraryChangeObserver {
     }
     
     public func photoLibraryDidChange(_ changeInstance: PHChange) {
-        guard let fetchResult = self.mediaManager.fetchResult,
-              let collectionChanges = changeInstance.changeDetails(for: fetchResult) else {
-            ypLog("Some problems there.")
-            return
-        }
+//        guard let fetchResult = self.mediaManager.fetchResult,
+//              let collectionChanges = changeInstance.changeDetails(for: fetchResult) else {
+//            ypLog("Some problems there.")
+//            return
+//        }
 
         DispatchQueue.main.async {
             let collectionView = self.v.collectionView
