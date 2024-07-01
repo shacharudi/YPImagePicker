@@ -66,11 +66,15 @@ extension YPLibraryVC {
             v.collectionView.reloadItems(at: selectedIndexPaths)
 			
             // Replace the current selected image with the previously selected one
-            if let previouslySelectedIndexPath = selectedIndexPaths.last {
+            if let previouslySelectedIndexPath = selectedIndexPaths.last,
+               v.collectionView.isIndexPathValid(indexPath: indexPath) {
                 v.collectionView.deselectItem(at: indexPath, animated: false)
-                v.collectionView.selectItem(at: previouslySelectedIndexPath, animated: false, scrollPosition: [])
-                currentlySelectedIndex = previouslySelectedIndexPath.row
-                changeAsset(mediaManager.getAsset(at: previouslySelectedIndexPath.row))
+                
+                if v.collectionView.isIndexPathValid(indexPath: previouslySelectedIndexPath) {
+                    v.collectionView.selectItem(at: previouslySelectedIndexPath, animated: false, scrollPosition: [])
+                    currentlySelectedIndex = previouslySelectedIndexPath.row
+                    changeAsset(mediaManager.getAsset(at: previouslySelectedIndexPath.row))
+                }
             }
 			
             checkLimit()
@@ -231,5 +235,14 @@ extension YPLibraryVC: UICollectionViewDelegateFlowLayout {
 							   layout collectionViewLayout: UICollectionViewLayout,
 							   minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return YPConfig.library.spacingBetweenItems
+    }
+}
+
+extension UICollectionView {
+    func isIndexPathValid(indexPath: IndexPath) -> Bool {
+        return indexPath.section >= 0
+            && indexPath.section < self.numberOfSections
+            && indexPath.row >= 0
+            && indexPath.row < self.numberOfItems(inSection: indexPath.section)
     }
 }
