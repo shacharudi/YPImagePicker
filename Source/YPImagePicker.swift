@@ -84,6 +84,11 @@ open class YPImagePicker: UINavigationController {
             transition.type = CATransitionType.fade
             self?.view.layer.add(transition, forKey: nil)
             
+            guard items.count > 0 else {
+                self?._didFinishPicking?([], true)
+                return
+            }
+            
             // Multiple items flow
             if items.count > 1 {
                 if YPConfig.library.skipSelectionsGallery {
@@ -93,7 +98,9 @@ open class YPImagePicker: UINavigationController {
                     let selectionsGalleryVC = YPSelectionsGalleryVC(items: items) { _, items in
                         self?.didSelect(items: items)
                     }
-                    self?.pushViewController(selectionsGalleryVC, animated: true)
+                    DispatchQueue.main.async {
+                        self?.pushViewController(selectionsGalleryVC, animated: true)
+                    }
                     return
                 }
             }
