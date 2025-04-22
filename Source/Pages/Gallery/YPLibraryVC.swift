@@ -58,6 +58,10 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         v.maxNumberWarningLabel.text = String(format: YPConfig.wordings.warningMaxItemsLimit,
 											  YPConfig.library.maxNumberOfItems)
         
+        if YPConfig.library.defaultMultipleSelection || selectedItems.count > 1 {
+            toggleMultipleSelection()
+        }
+        
         if let preselectedItems = YPConfig.library.preselectedItems,
            !preselectedItems.isEmpty {
             selectedItems = preselectedItems.compactMap { item -> YPLibrarySelection? in
@@ -81,10 +85,6 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
 
         guard mediaManager.hasResultItems else {
             return
-        }
-
-        if YPConfig.library.defaultMultipleSelection || selectedItems.count > 1 {
-            toggleMultipleSelection()
         }
     }
 
