@@ -295,19 +295,23 @@ internal final class YPLibraryVC: UIViewController, YPPermissionCheckable {
         delegate?.libraryViewStartedLoadingImage()
         
         let completion = { (isLowResIntermediaryImage: Bool) in
-            self.v.hideOverlayView()
-            self.v.assetViewContainer.updateSquareCropButtonState()
-            self.updateCropInfo()
-            if !isLowResIntermediaryImage {
-                self.v.hideLoader()
-                self.delegate?.libraryViewFinishedLoading()
+            DispatchQueue.main.async {
+                self.v.hideOverlayView()
+                self.v.assetViewContainer.updateSquareCropButtonState()
+                self.updateCropInfo()
+                if (!isLowResIntermediaryImage) {
+                    self.v.hideLoader()
+                    self.delegate?.libraryViewFinishedLoading()
+                }
             }
         }
         
         let updateCropInfo = {
-            self.updateCropInfo()
+            DispatchQueue.main.async {
+                self.updateCropInfo()
+            }
         }
-		
+        
         // MARK: add a func(updateCropInfo) after crop multiple
         DispatchQueue.global(qos: .userInitiated).async {
             switch asset.mediaType {

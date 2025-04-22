@@ -84,6 +84,11 @@ open class YPImagePicker: UINavigationController {
             transition.type = CATransitionType.fade
             self?.view.layer.add(transition, forKey: nil)
             
+            // Defensive: If no items, treat as cancel or do nothing
+            guard let item = items.first else {
+                self?._didFinishPicking?([], true)
+                return
+            }
             // Multiple items flow
             if items.count > 1 {
                 if YPConfig.library.skipSelectionsGallery {
@@ -97,9 +102,7 @@ open class YPImagePicker: UINavigationController {
                     return
                 }
             }
-            
             // One item flow
-            let item = items.first!
             switch item {
             case .photo(let photo):
                 let completion = { (photo: YPMediaPhoto) in
@@ -113,7 +116,6 @@ open class YPImagePicker: UINavigationController {
                     }
                     self?.didSelect(items: [mediaItem])
                 }
-                
                 func showCropVC(photo: YPMediaPhoto, completion: @escaping (_ aphoto: YPMediaPhoto) -> Void) {
                     switch YPConfig.showsCrop {
                     case .rectangle, .circle:
@@ -127,7 +129,6 @@ open class YPImagePicker: UINavigationController {
                         completion(photo)
                     }
                 }
-                
                 if YPConfig.showsPhotoFilters {
                     let filterVC = YPPhotoFiltersVC(inputPhoto: photo,
                                                     isFromSelectionVC: false)

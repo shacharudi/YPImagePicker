@@ -49,6 +49,18 @@ open class YPBottomPager: UIViewController, UIScrollViewDelegate {
     }
     
     func reload() {
+        // Clean up previous child view controllers
+        for child in children {
+            child.willMove(toParent: nil)
+            child.view.removeFromSuperview()
+            child.removeFromParent()
+        }
+        // Remove all subviews from scrollView
+        v.scrollView.subviews.forEach { $0.removeFromSuperview() }
+        // Remove all menu items from header and their views
+        v.header.menuItems.forEach { $0.removeFromSuperview() }
+        v.header.menuItems.removeAll()
+
         let screenWidth = YPImagePickerConfiguration.screenWidth
         let viewWidth: CGFloat = screenWidth
         for (index, c) in controllers.enumerated() {
@@ -62,10 +74,10 @@ open class YPBottomPager: UIViewController, UIScrollViewDelegate {
             c.view.width(viewWidth)
             equal(heights: c.view, v.scrollView)
         }
-        
+
         let scrollableWidth: CGFloat = CGFloat(controllers.count) * CGFloat(viewWidth)
         v.scrollView.contentSize = CGSize(width: scrollableWidth, height: 0)
-        
+
         // Build headers
         for (index, c) in controllers.enumerated() {
             let menuItem = YPMenuItem()
@@ -76,9 +88,11 @@ open class YPBottomPager: UIViewController, UIScrollViewDelegate {
                                       for: .touchUpInside)
             v.header.menuItems.append(menuItem)
         }
-        
-        let currentMenuItem = v.header.menuItems[0]
-        currentMenuItem.select()
+
+        if !v.header.menuItems.isEmpty {
+            let currentMenuItem = v.header.menuItems[0]
+            currentMenuItem.select()
+        }
         v.header.refreshMenuItems()
     }
     

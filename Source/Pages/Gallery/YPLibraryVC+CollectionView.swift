@@ -68,21 +68,24 @@ extension YPLibraryVC {
     func deselect(indexPath: IndexPath) {
         if let positionIndex = selectedItems.firstIndex(where: {
             $0.assetIdentifier == mediaManager.getAsset(at: indexPath.row)?.localIdentifier
-		}) {
+        }) {
             selectedItems.remove(at: positionIndex)
 
             // Refresh the numbers
             let selectedIndexPaths = getSelectedIndexPaths(selectedItems: selectedItems)
             v.collectionView.reloadItems(at: selectedIndexPaths)
-			
+
+            // Only deselect if the cell is actually selected to avoid crash
+            if let selectedIndexPathsSet = v.collectionView.indexPathsForSelectedItems, selectedIndexPathsSet.contains(indexPath) {
+                v.collectionView.deselectItem(at: indexPath, animated: false)
+            }
             // Replace the current selected image with the previously selected one
             if let previouslySelectedIndexPath = selectedIndexPaths.last {
-                v.collectionView.deselectItem(at: indexPath, animated: false)
                 v.collectionView.selectItem(at: previouslySelectedIndexPath, animated: false, scrollPosition: [])
                 currentlySelectedIndex = previouslySelectedIndexPath.row
                 changeAsset(mediaManager.getAsset(at: previouslySelectedIndexPath.row))
             }
-			
+
             checkLimit()
         }
     }
